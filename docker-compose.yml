@@ -1,0 +1,62 @@
+version: '3.11'
+services:
+  nodejs:
+    image: nodejs
+    build:
+      context: .
+      dockerfile: ./Dockerfile.expressjs
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL}
+    env_file: 
+      - .env
+    volumes:
+      - ./src:/app/src
+      - ./.env:/app/.env
+      - ${MTX_CSV_PATH}:/app/data/Employee_Matrix_Download.csv
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+      - ./tsconfig.json:/app/tsconfig.json
+    ports:
+      - ${PORT}:${PORT}
+    container_name: expressjs
+    command: npm run mydev
+    depends_on:
+    #   - flagd
+      - db
+
+#   flagd:
+#     image: flagd
+#     build:
+#       context: .
+#       dockerfile: ./Dockerfile.flagd
+#     container_name: 'flagd'
+#     env_file: 
+#       - .env
+#     volumes:
+#       - ./flags.flagd.json:/etc/flagd/flags.flagd.json
+#     tty: true
+#     stdin_open: true
+#     ports:
+#       - ${FLAGD_PORT}:${FLAGD_PORT}
+#     command: start --uri file:/etc/flagd/flags.flagd.json
+    
+  db:
+    image: postgres
+    restart: always
+    env_file: 
+      - .env
+    environment:
+      POSTGRES_DB: ${DATABASENAME}
+      POSTGRES_USER: ${USERNAME}
+      POSTGRES_PASSWORD: ${PASSWORD}
+    ports:
+      - "5432:5432"
+    container_name: postgres.db
+    # depends_on:
+    #   - flagd
+    volumes: 
+      - postgres_db:/var/lib/postgresql/data
+
+volumes:
+  postgres_db:

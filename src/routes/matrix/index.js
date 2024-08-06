@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express = require('express');
+var create_1 = require("../../controller/matrix/mtx_role/create");
+// const { openFeatureValidation } = require('../../middleware/openFeatureValidation');
+var matrixRoutes = express.Router();
+matrixRoutes.post('/createRole', /*openFeatureValidation('mtx-role-create') ,*/ create_1.createRole);
+// matrixRoutes.get('/readRole', /* openFeatureValidation('mtx-role-read') ,*/ readRole);
+// matrixRoutes.put('/updateRole', /* openFeatureValidation('mtx-role-update') ,*/ updateRole);
+// matrixRoutes.delete('/deleteRole', /* openFeatureValidation('mtx-role-delete') ,*/ deleteRole);
+exports.default = matrixRoutes;
