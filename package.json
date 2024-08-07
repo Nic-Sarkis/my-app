@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "clean": "rimraf dist",
-    "build": "npm run clean && tsc ./src/server.ts",
+    "build": "npm run clean && tsc",
     "mydev": "npm run build && npx nodemon /app/src/server.ts",
     "start": "next start",
     "lint": "next lint"
