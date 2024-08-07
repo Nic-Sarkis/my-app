@@ -1,5 +1,9 @@
 {
     "execMap": {
         "ts": "tsc"
-    }
+    },
+    "watch": ["src"],
+    "ext": "ts",
+    "ignore": ["node_modules", "dist"],
+    "exec": "node dist/server.js"
 }

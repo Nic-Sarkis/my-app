@@ -7,7 +7,7 @@
     "dev": "next dev",
     "clean": "rimraf dist",
     "build": "npm run clean && tsc",
-    "mydev": "npm run build && npx nodemon /app/src/server.ts",
+    "mydev": "npm run build && npx nodemon -L /app/src/server.ts",
     "start": "next start",
     "lint": "next lint"
   },
