@@ -1,0 +1,3 @@
+FROM ghcr.io/open-feature/flagd:latest
+
+CMD ["start",  "--uri file:/etc/flagd/flags.flagd.json"]

@@ -10,7 +10,7 @@ services:
       DATABASE_URL: ${DATABASE_URL}
     env_file: 
       - .env
-    volumes:
+    volumes:  
       - ./src:/app/src
       - ./.env:/app/.env
       - ${MTX_CSV_PATH}:/app/data/Employee_Matrix_Download.csv
@@ -22,24 +22,24 @@ services:
     container_name: expressjs
     command: npm run mydev
     depends_on:
-    #   - flagd
+      - flagd
       - db
 
-#   flagd:
-#     image: flagd
-#     build:
-#       context: .
-#       dockerfile: ./Dockerfile.flagd
-#     container_name: 'flagd'
-#     env_file: 
-#       - .env
-#     volumes:
-#       - ./flags.flagd.json:/etc/flagd/flags.flagd.json
-#     tty: true
-#     stdin_open: true
-#     ports:
-#       - ${FLAGD_PORT}:${FLAGD_PORT}
-#     command: start --uri file:/etc/flagd/flags.flagd.json
+  flagd:
+    image: flagd
+    build:
+      context: .
+      dockerfile: ./Dockerfile.flagd
+    container_name: 'flagd'
+    env_file: 
+      - .env
+    volumes:
+      - ./flags.flagd.json:/etc/flagd/flags.flagd.json
+    tty: true
+    stdin_open: true
+    ports:
+      - ${FLAGD_PORT}:${FLAGD_PORT}
+    command: start --uri file:/etc/flagd/flags.flagd.json
     
   db:
     image: postgres
@@ -53,8 +53,8 @@ services:
     ports:
       - "5432:5432"
     container_name: postgres.db
-    # depends_on:
-    #   - flagd
+    depends_on:
+      - flagd
     volumes: 
       - postgres_db:/var/lib/postgresql/data
 
